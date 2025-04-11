@@ -35,12 +35,14 @@ class Media(db.Model):
     type: Mapped[str] = mapped_column(String(20), nullable=False)
     url: Mapped[str] = mapped_column(String(20), nullable=False)
     post_id: Mapped[int] = mapped_column(ForeignKey('post.id'))
+    post: Mapped['Post'] = relationship(back_populates='media', uselist=False)
     
 
 class Post(db.Model):
     __tablename__ = 'post'
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    media: Mapped['Media'] = relationship(back_populates='post', uselist=False)
     
 
 class Comment(db.Model):
